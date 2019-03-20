@@ -27,6 +27,30 @@ module.exports = {
 					presets: ['es2015', 'react'],
 				},
 			},
+			{
+				test: /\.scss$/,
+				use: [
+					"style-loader", // creates style nodes from JS strings
+					"css-loader",   // translates CSS into CommonJS
+					{
+						loader: "postcss-loader",
+						options: {
+							plugins: () => [require('autoprefixer')]
+						}
+					},
+					"sass-loader"   // compiles Sass to CSS
+				]
+			},
+			{
+				test: /\.(jpg|png|gif|svg|pdf|ico)$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: { limit: 40000 }
+					},
+					'image-webpack-loader'
+				]
+			},
 		],
 	},
 	// devServer 則是 webpack-dev-server 設定
