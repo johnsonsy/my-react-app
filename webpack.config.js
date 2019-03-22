@@ -26,6 +26,14 @@ module.exports = {
 				query: {
 					presets: ['es2015', 'react'],
 				},
+			}, {
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader', {
+					loader: "postcss-loader",
+					options: {
+						plugins: () => [require('autoprefixer')]
+					}
+				}]
 			},
 			{
 				test: /\.scss$/,
@@ -45,7 +53,7 @@ module.exports = {
 				test: /\.(jpg|png|gif|svg|pdf|ico)$/,
 				use: [
 					{
-						loader: 'file-loader',
+						loader: 'url-loader',
 						options: { limit: 40000 }
 					},
 					'image-webpack-loader'
@@ -57,6 +65,16 @@ module.exports = {
 	devServer: {
 		inline: true,
 		port: 8080,
+	},
+	resolve: {
+		// modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+		// import alias
+		alias: {
+			// "@ant-design/icons/lib/dist$": path.resolve(__dirname, "./src/styles/antdIcons.js"),
+			// api: path.resolve(__dirname, './src/actions/api.js'),
+		},
+		// // import 時可不寫附檔名
+		extensions: [".js", ".css", ".scss", ".json"]
 	},
 	// plugins 放置所使用的外掛
 	plugins: [HTMLWebpackPluginConfig],
