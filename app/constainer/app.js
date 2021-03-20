@@ -1,28 +1,30 @@
-import React, { Component } from "react";
-// import { Input, Button, Select } from 'antd';
-import { post } from '../actions/action'
-import FacebookLogin from './FacebookLogin'
-import Header from './Header'
+import React, { Component } from 'react';
+import FacebookLogin from './FacebookLogin';
+import Header from './Header';
+import { Provider } from 'react-redux';
+import ReactDOM from 'react-dom';
+import reducers from '../reducer'
+import {createStore, applyMiddleware, compose} from 'redux';
+import ReduxThunk from 'redux-thunk';
 
-class App extends Component {
-	constructor(props) {
-		super(props)
-	};
+const store = createStore(
+    reducers,
+    applyMiddleware(ReduxThunk),
 
+);
 
-	render() {
-		return (
+const App = () => {
+    return (
+        <Provider store={store}>
+            <div className="root_bkg">
+                <Header />
+                <div className="d-flex justify-content-center">
+                    <FacebookLogin />
+                </div>
+            </div>
+        </Provider>
+    );
+};
 
-			<div className="root_bkg">
-				<Header/>
-				<div className="d-flex justify-content-center">
-					<FacebookLogin/>
-				</div>
-			</div>
-		);
-	}
+export default App;
 
-
-}
-
-export default App
